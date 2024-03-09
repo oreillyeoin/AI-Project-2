@@ -58,7 +58,6 @@ def color_conflict_resolution(G, color_assignment, num_colors, max_iterations=10
         node_to_change = get_node_with_max_conflicts(G, color_assignment)
         old_color = color_assignment[node_to_change]
 
-        # Find the available colors for the node (excluding its current color)
         available_colors = [color for color in range(1, num_colors + 1) if color != old_color]
 
         if available_colors:
@@ -69,7 +68,6 @@ def color_conflict_resolution(G, color_assignment, num_colors, max_iterations=10
         conflicts_count = count_conflicts(G, color_assignment)
         conflicts_over_time.append(conflicts_count)
 
-        # Update the best solution if a lower conflicts count is found
         if conflicts_count < best_conflicts_count:
             best_conflicts_count = conflicts_count
             best_solution = color_assignment.copy()
@@ -80,7 +78,6 @@ def color_conflict_resolution(G, color_assignment, num_colors, max_iterations=10
     if best_conflicts_count != 0:
         print(f"\n[Lowest number of conflicts encountered: {best_conflicts_count} for CN: {num_colors}]\n")
 
-    # Plot conflicts over time
     plt.plot(range(1, len(conflicts_over_time) + 1), conflicts_over_time, label=f"CN: {num_colors}")
     plt.xlabel("Iteration")
     plt.ylabel("Number of Conflicts")
@@ -108,5 +105,4 @@ if __name__ == "__main__":
     chromatic_number = find_chromatic_number(graph, max_colors_to_try)
 
     if chromatic_number is not None:
-        # You can use the chromatic_number as needed
         print(f"\n---------SOLVED---------\n\nThe determined chromatic number is: {chromatic_number}")
