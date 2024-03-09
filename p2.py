@@ -8,10 +8,9 @@ def create_graph(graph_type, graph_params):
     elif graph_type == "grid":
         G = nx.grid_2d_graph(*graph_params)
     elif graph_type == "watts_strogatz":
-        G = nx.watts_strogatz_graph(*graph_params, p=0.2)  # Adjust the rewiring probability as needed
+        G = nx.watts_strogatz_graph(*graph_params, p=0.2) 
     elif graph_type == "barabasi_albert":
-        G = nx.barabasi_albert_graph(graph_params[0], m=graph_params[1])  # Corrected parameters
-    # Add more graph types as desired
+        G = nx.barabasi_albert_graph(graph_params[0], m=graph_params[1]) 
 
     return G
 
@@ -46,7 +45,6 @@ def get_node_with_max_conflicts(G, color_assignment):
 
 
 def color_conflict_resolution(G, color_assignment, num_colors, max_iterations=100):
-    #visualize_graph(G, color_assignment)
 
     iteration = 1
     conflicts_count = count_conflicts(G, color_assignment)
@@ -56,16 +54,14 @@ def color_conflict_resolution(G, color_assignment, num_colors, max_iterations=10
 
     while iteration <= max_iterations:
         print(f"CN:{num_colors} | Iteration {iteration}: {conflicts_count} conflicts")
-        # visualize_graph(G, color_assignment)
 
         if conflicts_count == 0:
             best_solution = color_assignment.copy()
-            break  # No conflicts, the coloring is valid
+            break  
 
         node_to_change = get_node_with_max_conflicts(G, color_assignment)
         old_color = color_assignment[node_to_change]
 
-        # Find the available colors for the node (excluding its current color)
         available_colors = [color for color in range(1, num_colors + 1) if color != old_color]
 
         if available_colors:
@@ -87,7 +83,6 @@ def color_conflict_resolution(G, color_assignment, num_colors, max_iterations=10
     if best_conflicts_count != 0:
         print(f"\n[Lowest number of conflicts encountered: {best_conflicts_count} for CN: {num_colors}]\n")
 
-    # Plot conflicts over time
     plt.plot(range(1, len(conflicts_over_time) + 1), conflicts_over_time, label=f"CN: {num_colors}")
     plt.xlabel("Iteration")
     plt.ylabel("Number of Conflicts")
@@ -110,13 +105,12 @@ def find_chromatic_number(G, max_colors):
 
 
 if __name__ == "__main__":
-    # Experiment parameters
     graph_types_to_try = ["erdos_renyi", "grid", "watts_strogatz", "barabasi_albert"]
     graph_params = {
         "erdos_renyi": (15, 0.3),
         "grid": (4, 4),
-        "watts_strogatz": (15, 4),  # Adjust parameters accordingly
-        "barabasi_albert": (15, 2)   # Adjust parameters accordingly
+        "watts_strogatz": (15, 4), 
+        "barabasi_albert": (15, 2) 
     }
 
     max_colors_to_try = 10
